@@ -48,7 +48,6 @@ print(f"Acurácia no conjunto de teste: {test_acc:.2f}")
 
 
 # %%
-# Função corrigida
 def mostrar_exemplos(numero, dataset, labels):
     if numero < 0 or numero > 9:
         print("Por favor, insira um número entre 0 e 9.")
@@ -58,22 +57,22 @@ def mostrar_exemplos(numero, dataset, labels):
     labels_scalar = np.argmax(labels, axis=1)
     # Filtrar imagens correspondentes ao número
     indices = np.where(labels_scalar == numero)[0]
-    print(f"Encontrados {len(indices)} exemplos para o número {numero}.")  # Mensagem de depuração
+    print(f"Encontrados {len(labels)} exemplos para o número {numero}.")  # Mensagem de depuração
     if len(indices) == 0:
         print(f"Nenhum exemplo encontrado para o número {numero}.")
         return
     
     # Selecionar a primeira imagem para exibição
-    exemplo = dataset[indices[0]].reshape(28, 28)  # Redimensionar para 2D para exibição
-    print(f"Exibindo 1 exemplo.")  # Mensagem de depuração
-
+    exemplo = dataset[indices[:5]].reshape(-1,28, 28)  # Redimensionar para 2D para exibição
+  
     # Plotar a imagem
-    plt.figure(figsize=(2, 2))
-    plt.imshow(exemplo, cmap='gray')
-    plt.axis('off')
-    plt.suptitle(f"Exemplo do número {numero}", fontsize=16)
+    plt.figure(figsize=(10, 2))
+    for i, exemplo in enumerate(exemplo):
+        plt.subplot(1, 5, i + 1)
+        plt.imshow(exemplo, cmap='gray')
+        plt.axis('off')
+    plt.suptitle(f"Exemplos do número {numero}", fontsize=16)
     plt.show()
-
 # Chamadas da função ajustadas
 while True:
     try:
